@@ -1,0 +1,228 @@
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Management
+  labels:
+    app: Management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Management
+  template:
+    metadata:
+      labels:
+        app: Management
+    spec:
+      containers:
+        - name: Management
+          image: username/Management:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Recept
+  labels:
+    app: Recept
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Recept
+  template:
+    metadata:
+      labels:
+        app: Recept
+    spec:
+      containers:
+        - name: Recept
+          image: username/Recept:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: Seat
+  labels:
+    app: Seat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: Seat
+  template:
+    metadata:
+      labels:
+        app: Seat
+    spec:
+      containers:
+        - name: Seat
+          image: username/Seat:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ReceptDashBoard
+  labels:
+    app: ReceptDashBoard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ReceptDashBoard
+  template:
+    metadata:
+      labels:
+        app: ReceptDashBoard
+    spec:
+      containers:
+        - name: ReceptDashBoard
+          image: username/ReceptDashBoard:latest
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 10
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 10
+          livenessProbe:
+            httpGet:
+              path: '/actuator/health'
+              port: 8080
+            initialDelaySeconds: 120
+            timeoutSeconds: 2
+            periodSeconds: 5
+            failureThreshold: 5
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Management
+  labels:
+    app: Management
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Management
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Recept
+  labels:
+    app: Recept
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Recept
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: Seat
+  labels:
+    app: Seat
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: Seat
+
+
+---
+
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: ReceptDashBoard
+  labels:
+    app: ReceptDashBoard
+spec:
+  ports:
+    - port: 8080
+      targetPort: 8080
+  selector:
+    app: ReceptDashBoard
+
