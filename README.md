@@ -8,7 +8,9 @@
 - [분석/설계](#분석설계)
 - [구현:](#구현-)
 - [운영](#운영)
-  - [CI/CD 설정](#cicd설정)
+  - [Gateway 설정](#Gateway)
+  - [동기식 호출](#FeignClient)
+  - [오토 스케일링](#Auto-Scaling)
 
 
 # 서비스 시나리오
@@ -23,6 +25,7 @@
 - [X] 이벤트 스토밍
 - [ ] 운영
   - [ ] Gateway
+  - [ ] 동기식 호출
   - [ ] Auto Scaling
   - [ ] Self-healing
   - [ ] Polyglot
@@ -30,3 +33,50 @@
 # 분석설계
 ### 이벤트 스토밍
 <img width="1582" alt="Screen Shot 2022-05-17 at 11 07 09 AM" src="https://user-images.githubusercontent.com/55871108/168713780-c3f5bab3-64f7-4e8e-b961-910da5f69433.png">
+
+# 운영
+### Gateway
+원하는 서비스에 알맞게 할당될 수 있도록 포트를 분배
+```
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: Management
+          uri: http://localhost:8081
+          predicates:
+            - Path=/orderMngs/** 
+        - id: Recept
+          uri: http://localhost:8082
+          predicates:
+            - Path=/recepts/** 
+        - id: Seat
+          uri: http://localhost:8083
+          predicates:
+            - Path=/seats/** 
+        - id: ReceptDashBoard
+          uri: http://localhost:8084
+          predicates:
+            - Path= 
+        - id: frontend
+          uri: http://localhost:8080
+          predicates:
+            - Path=/**
+```
+
+### FeignClient
+
+checkSeat 부분은 반드시 확인되어야 할 절차이므로 동기식으로 호출함.
+```
+@FeignClient(name="Seat", url="http://Seat:8080")
+public interface SeatService {
+    @RequestMapping(method= RequestMethod.GET, path="/seats")
+    public void checkSeat(@RequestBody Seat seat);{
+    // 서비스 로직
+    };
+```
+
+### Auto Scaling
+
+
