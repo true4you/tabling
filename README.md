@@ -97,6 +97,9 @@ server:
   port: 8080
 ```
 
+![image](https://user-images.githubusercontent.com/105638839/168973990-60e83e44-906c-48f0-aab3-48cf6d2aac95.png)
+
+
 ### FeignClient
 
 checkSeat 함수는 조건 충족 여부에 따라 external 서비스인 카카오톡 메시지 서비스 작동 유무를 결정해야 함으로 Sync로 호출하기로 결정.
