@@ -122,6 +122,8 @@ docker login
  docker push true4you/tabbling:20220517
  ```
 
+![image](https://user-images.githubusercontent.com/105638839/168960530-3dfaf795-d8e8-426e-9c5c-0ab6275ddbc4.png)
+
 ### Auto Scaling
 요청이 많아질 경우에 대비하여 pod의 다음과 같은 명령어로 auto Scaling을 설정할 필요가 있다.
 평균 CPU의 사용률이 50%가 넘을 경우, 최대 5개까지 pod가 늘어날 수 있도록 설정 가정.
